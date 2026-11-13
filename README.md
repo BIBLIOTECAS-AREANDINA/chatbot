@@ -1,115 +1,28 @@
-# 📚 Librín — Chatbot de la Biblioteca Digital Areandina
+# Librín — Biblioteca Digital Areandina
 
-Librín es el asistente virtual oficial de la [Biblioteca Digital Areandina (BIDIG)](https://bidig.areandina.edu.co/), impulsado por **Claude** de Anthropic. Ayuda a estudiantes, docentes y administrativos a navegar los recursos de la biblioteca digital.
+Asistente con interfaz HTML y servidor Node/Express. Revisión del código: 13 de noviembre de 2026.
 
----
+## Implementación actual
 
-## 🚀 Instalación y Configuración
+`server.js` utiliza Groq, con `GROQ_API_KEY` en el entorno y el modelo configurado `llama-3.3-70b-versatile`. La documentación anterior describía Anthropic; no coincide con el servidor actual. La disponibilidad del proveedor/modelo no se probó en esta revisión.
 
-### Prerrequisitos
-- [Node.js](https://nodejs.org/) v18 o superior instalado
-- Una API key válida de [Anthropic Console](https://console.anthropic.com/)
+Dependencias declaradas: express, cors y dotenv. Requiere una versión de Node compatible con `fetch` nativo. El servidor atiende la interfaz y seis rutas POST: `/api/chat`, `/api/verificar`, `/api/reserva`, `/api/renovar`, `/api/prestamo` y `/api/soporte`.
 
-### Pasos
+Las operaciones bibliotecarias dependen de flujos n8n externos al repositorio. El código usa `http://localhost:5678/webhook` con rutas Librin, Librin-verificar y Librin-renovar. Confirmar esos flujos y sus permisos en el entorno autorizado antes de probar acciones.
 
-**1. Clona o descarga el proyecto**
+## Preparación local
 
-Asegúrate de tener esta estructura de archivos:
-```
-/librin-chatbot
-  chatbot2.html
-  server.js
-  package.json
-  .env
-  .gitignore
-  README.md
-```
+1. Clonar este repositorio e instalar las dependencias declaradas (`npm install`).
+2. Configurar `GROQ_API_KEY` en un `.env` local excluido de Git. `PORT` es opcional; el valor predeterminado es 3000.
+3. Preparar n8n local y revisar sus flujos con datos ficticios.
+4. Ejecutar `npm start`; visitar `http://localhost:3000`.
 
-**2. Instala las dependencias**
+No se ejecutaron estas instrucciones durante la centralización. No colocar claves en el frontend ni subir `.env`, datos personales o registros operativos a GitHub.
 
-Abre una terminal en la carpeta del proyecto y ejecuta:
-```bash
-npm install
-```
+## Despliegue y pendientes
 
-**3. Configura tu API Key**
+GitHub Pages sirve archivos estáticos; no ejecuta Express ni n8n. Tener una página accesible no acredita un chatbot operativo. El repositorio contiene además `chatbot_connector.php` y archivos de otras propuestas: revisar cuál implementación debe mantenerse. Validar autenticación, exposición de archivos y CORS antes de desplegar institucionalmente.
 
-Abre el archivo `.env` y reemplaza el placeholder con tu clave real de Anthropic:
-```env
-ANTHROPIC_API_KEY=sk-ant-api03-XXXXXXXXXXXXXXXXXXXXXX
-```
+Repositorio transferido desde REKOL08 a BIBLIOTECAS-AREANDINA conservando historial, nombre y visibilidad pública. No se modificó código de aplicación ni producción.
 
-> ⚠️ **Importante:** Nunca compartas ni subas el archivo `.env` a repositorios públicos. Ya está incluido en `.gitignore`.
-
-**4. Inicia el servidor**
-
-```bash
-node server.js
-```
-
-Verás en la terminal:
-```
-✅ Servidor Librín corriendo en http://localhost:3000
-📚 Abre tu chatbot en: http://localhost:3000
-```
-
-**5. Abre el chatbot en tu navegador**
-
-Ve a: [http://localhost:3000](http://localhost:3000)
-
----
-
-## 🗂️ Estructura del proyecto
-
-| Archivo | Descripción |
-|---|---|
-| `chatbot2.html` | Interfaz completa del chatbot (HTML + CSS + JS) |
-| `server.js` | Servidor Express — proxy seguro hacia la API de Anthropic |
-| `package.json` | Configuración y dependencias del proyecto |
-| `.env` | Variables de entorno (API key — **NO subir a Git**) |
-| `.gitignore` | Archivos excluidos del control de versiones |
-| `README.md` | Este archivo |
-
----
-
-## 🔑 ¿Cómo consigo una API Key de Anthropic?
-
-1. Ve a [https://console.anthropic.com/](https://console.anthropic.com/)
-2. Crea o inicia sesión en tu cuenta
-3. Navega a **API Keys** y genera una nueva clave
-4. Cópiala y pégala en el archivo `.env`
-
----
-
-## ⚙️ Cómo funciona
-
-```
-Usuario (navegador)
-      │
-      ▼
-  chatbot2.html  ──POST /api/chat──▶  server.js  ──▶  API Anthropic
-                                          │
-                                   (API key segura
-                                    en variables de
-                                    entorno - .env)
-```
-
-El frontend **nunca** expone la API key. Todo el llamado a Anthropic se hace desde el servidor Node.js.
-
----
-
-## 🛠️ Comandos útiles
-
-| Comando | Acción |
-|---|---|
-| `npm install` | Instala todas las dependencias |
-| `node server.js` | Inicia el servidor en el puerto 3000 |
-| `npm start` | Alternativa para iniciar el servidor |
-
----
-
-## 📞 Soporte
-
-Si tienes problemas con el acceso a la biblioteca, contacta a:
-- 📧 **biblioteca@areandina.edu.co**
-- 🌐 **[https://bidig.areandina.edu.co/](https://bidig.areandina.edu.co/)**
+[Inventario y evidencias de centralización](https://github.com/BIBLIOTECAS-AREANDINA/BIBLIONOVA/blob/main/docs/CENTRALIZACION_2026-11-13.md).
